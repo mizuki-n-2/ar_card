@@ -5,6 +5,18 @@
     <title>WebARで遊んでみた</title>
     <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script>
+      const CLASSNAME = "-visible";
+      const TIMEOUT = 1500;
+      const target = document.querySelector(".title");
+
+      setInterval(() => {
+          target.classList.add(CLASSNAME);
+        setTimeout(() => {
+          target.classList.remove(CLASSNAME);
+        }, TIMEOUT);
+      }, TIMEOUT * 2);
+    </script>
     <style>
       .hide {
         display: none;
