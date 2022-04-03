@@ -6,12 +6,29 @@
     <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <script>
+      AFRAME.registerComponent('marker', {
+        init: function () {
+          const marker = this.el;
+          const target = document.querySelector(".title");
+
+          marker.addEventListener('markerFound', function () {
+            target.classList.remove('hide');
+          });
+
+          marker.addEventListener('markerLost', function () {
+            target.classList.add('hide');
+          });
+        }
+      });
+
       setInterval(() => {
         const target = document.querySelector(".title");
-        target.classList.add("-visible");
-        setTimeout(() => {
-          target.classList.remove("-visible");
-        }, 1500);
+        if (!target.classList.contains("hide")) {
+          target.classList.add("-visible");
+          setTimeout(() => {
+            target.classList.remove("-visible");
+          }, 1500);
+        }
       }, 1500 * 2);
     </script>
     <style>
@@ -75,7 +92,7 @@
   </head>
   <body style="margin: 0px; overflow: hidden">
     <div class="msg">
-      <h1 class="title">
+      <h1 class="title hide">
         <span>誕</span>
         <span>生</span>
         <span>日</span>
@@ -92,7 +109,7 @@
       embedded
       arjs="sourceType: webcam;"
     >
-      <a-marker type="pattern" url="assets/pattern-blue.patt">
+      <a-marker type="pattern" url="assets/pattern-blue.patt" marker>
         <a-image src="assets/img/snoopy_birthday.png"></a-image>
       </a-marker>
       
