@@ -5,20 +5,21 @@
     <title>WebARで遊んでみた</title>
     <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://raw.githack.com/fcor/arjs-gestures/master/dist/gestures.js"></script>
     <script>
-      AFRAME.registerComponent('marker', {
+      AFRAME.registerComponent("marker", {
         init: function () {
           const marker = this.el;
           const target = document.querySelector(".title");
 
-          marker.addEventListener('markerFound', function () {
-            target.classList.remove('hide');
+          marker.addEventListener("markerFound", function () {
+            target.classList.remove("hide");
           });
 
-          marker.addEventListener('markerLost', function () {
-            target.classList.add('hide');
+          marker.addEventListener("markerLost", function () {
+            target.classList.add("hide");
           });
-        }
+        },
       });
 
       setInterval(() => {
@@ -77,7 +78,7 @@
         transition-delay: 0.24s;
       }
       .title span:nth-child(6) {
-        transition-delay: 0.30s;
+        transition-delay: 0.3s;
       }
       .title span:nth-child(7) {
         transition-delay: 0.36s;
@@ -106,13 +107,26 @@
     </div>
     <a-scene
       vr-mode-ui="enabled: false;"
+      renderer="logarithmicDepthBuffer: true;"
+      gesture-detector
       embedded
       arjs="sourceType: webcam;"
     >
-      <a-marker type="pattern" url="assets/pattern-snoopy_dance.patt" marker>
-        <a-image src="assets/img/snoopy_birthday.png"></a-image>
+      <a-marker
+        type="pattern"
+        url="assets/pattern-snoopy_dance.patt"
+        marker
+        raycaster="objects: .clickable"
+        emitevents="true"
+        cursor="fuse: false; rayOrigin: mouse;"
+      >
+        <a-image
+          src="assets/img/snoopy_birthday.png"
+          class="clickable"
+          gesture-handler
+        ></a-image>
       </a-marker>
-      
+
       <a-entity camera></a-entity>
     </a-scene>
   </body>
